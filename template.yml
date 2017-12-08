@@ -16,7 +16,7 @@ Resources:
   InventoryCreateResource:
       Type: AWS::Serverless::Function
       Properties:
-        Handler: inventory.loadSku
+        Handler: index.loadSku
         Runtime: nodejs4.3
         Role:
           Fn::ImportValue:
@@ -25,7 +25,7 @@ Resources:
   InventoryPromiseResource:
       Type: AWS::Serverless::Function
       Properties:
-        Handler: inventory.allocate
+        Handler: index.allocate
         Runtime: nodejs4.3
         Role:
           Fn::ImportValue:
@@ -37,7 +37,7 @@ Resources:
          Type: AWS::Serverless::Function
 
          Properties:
-           Handler: inventory.handler
+           Handler: index.handler
            Runtime: nodejs4.3
            Role:
              Fn::ImportValue:

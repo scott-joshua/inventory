@@ -28,18 +28,6 @@ exports.create = function (event, context, callback) {
     let countryCode = event.countryCode;
     loadSKU(sku, countryCode, done);
 
-    /*
-    USE TO CLEAR CACHE IF USING GATEWAY CACHE
-    var params = {
-        restApiId: 'atpCheck',
-        stageName: 'stage'
-    };
-    apigateway.flushStageAuthorizersCache(params, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-    });
-    */
-
 };
 
 
