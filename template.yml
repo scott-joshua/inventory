@@ -12,25 +12,6 @@ Parameters:
     Description: Inventory notification
 
 Resources:
-
-  InventoryCreateResource:
-      Type: AWS::Serverless::Function
-      Properties:
-        Handler: index.loadSku
-        Runtime: nodejs4.3
-        Role:
-          Fn::ImportValue:
-            !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
-
-  InventoryPromiseResource:
-      Type: AWS::Serverless::Function
-      Properties:
-        Handler: index.allocate
-        Runtime: nodejs4.3
-        Role:
-          Fn::ImportValue:
-            !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
-
   InventoryService:
         Type: AWS::Serverless::Function
         Properties:
@@ -42,7 +23,6 @@ Resources:
 
   InventoryResource:
          Type: AWS::Serverless::Function
-
          Properties:
            Handler: index.handlerHttp
            Runtime: nodejs4.3
@@ -55,4 +35,3 @@ Resources:
                Properties:
                  Path: /inventory/{CountryCode}/{SKU}
                  Method: get
-                 RestApiId: atpCheck
