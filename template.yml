@@ -31,13 +31,20 @@ Resources:
           Fn::ImportValue:
             !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
 
-
+  InventoryService:
+        Type: AWS::Serverless::Function
+        Properties:
+          Handler: index.handler
+          Runtime: nodejs4.3
+          Role:
+            Fn::ImportValue:
+              !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
 
   InventoryResource:
          Type: AWS::Serverless::Function
 
          Properties:
-           Handler: index.handler
+           Handler: index.handlerHttp
            Runtime: nodejs4.3
            Role:
              Fn::ImportValue:

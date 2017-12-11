@@ -6,11 +6,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 const fetch = require("node-fetch");
 
 
-exports.handler = (event, context, callback) => {
+exports.handlerHttp = (event, context, callback) => {
 
     let sku = event['pathParameters']['SKU'];
-    let countryCode = event['pathParameters']['CountryCode']
-    ;
+    let countryCode = event['pathParameters']['CountryCode'];
     const done = (err, res) => callback(null, {
         statusCode: err ? '400' : '200',
         body: err ? err.message : JSON.stringify(res),
@@ -20,6 +19,24 @@ exports.handler = (event, context, callback) => {
     });
 
     getSku(sku, countryCode, done);
+};
+
+
+
+exports.handler = (event, context, callback) => {
+    let keys = [];
+    event.Items.forEach(function(item){
+        keys.push({SKU:item.SKU, CountryCode: event.CountryCode});
+    });
+    console.log("Keys:", keys);
+    docClient.batchGet({ RequestItems: {Inventory: { Keys: keys,} }},  function(err, data) {
+
+        if(err){
+            console.log("ERROR", err);
+        }else{
+            callback(err, data.Responses.Inventory);
+        }
+    });
 };
 
 
@@ -125,9 +142,9 @@ const getSku = function(sku, countryCode, callback) {
         Key: {SKU: sku, CountryCode: countryCode}
     },  function(err, data) {
         if(!data.Item){
-            exports.loadSKU(sku, countryCode, function(err, data){
+            loadSKU(sku, countryCode, function(err, data){
                 if(!err){
-                    exports.get(sku, countryCode, callback)
+                    getSku(sku, countryCode, callback)
                 }else{
                     callback(err, data); //error loading SKU from SAP
                 }
@@ -136,6 +153,11 @@ const getSku = function(sku, countryCode, callback) {
             callback(err, data);
         }
     });
+};
+
+
+const getSkus = function(skus, countrycode, callback){
+
 };
 
 
