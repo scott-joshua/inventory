@@ -40,7 +40,7 @@ exports.handler = (event, context, callback) => {
 };
 
 
-exports.create = function (event, context, callback) {
+const create = function (event, context, callback) {
     let sku = event.sku;
     let countryCode = event.countryCode;
     loadSKU(sku, countryCode, done);
@@ -48,7 +48,7 @@ exports.create = function (event, context, callback) {
 };
 
 
-exports.updateSKU = function(event, context, callback) {
+const updateSKU = function(event, context, callback) {
     let message = event.Records[0].Sns.Message;
     console.log('Message received from SNS:', message);
     loadSKU(message.sku, message.countryCode, callback);
@@ -56,7 +56,7 @@ exports.updateSKU = function(event, context, callback) {
 
 
 
-exports.allocate = (event, context, callback) => {
+const allocate = (event, context, callback) => {
 
     let params = {
         TableName:"Inventory",
@@ -155,10 +155,6 @@ const getSku = function(sku, countryCode, callback) {
     });
 };
 
-
-const getSkus = function(skus, countrycode, callback){
-
-};
 
 
 
