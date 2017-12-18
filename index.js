@@ -23,7 +23,7 @@ exports.handlerHttp = (event, context, callback) => {
 
 
 
-exports.handler = (event, context, callback) => {
+exports.InventoryService = (event, context, callback) => {
     let keys = [];
     event.Items.forEach(function(item){
         keys.push({SKU:item.SKU, CountryCode: event.CountryCode});

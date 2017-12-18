@@ -15,7 +15,7 @@ Resources:
   InventoryService:
         Type: AWS::Serverless::Function
         Properties:
-          Handler: index.handler
+          Handler: index.InventoryService
           Runtime: nodejs4.3
           Role:
             Fn::ImportValue:
